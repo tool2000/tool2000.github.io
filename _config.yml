@@ -3,6 +3,11 @@ description:  Intelligence Curriculum Guide
 url: https://tool2000.github.io/
 baseurl: ''
 theme_skin: blue
+markdown: kramdown
+highlighter: rouge
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
 
 sass:
   sass_dir: _sass
