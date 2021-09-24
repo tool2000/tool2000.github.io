@@ -6,7 +6,6 @@ theme_skin: blue
 markdown: kramdown
 highlighter: rouge
 lsi: false
-excerpt_separator: ""
 incremental: false
 
 sass:
