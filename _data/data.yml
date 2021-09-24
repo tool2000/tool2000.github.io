@@ -1,20 +1,20 @@
-name: John Doe
+name: Jung DaeYoung
 support_dark_mode: true
 fork: true
 
 # Sidebar
 contact:
-  email: info@johndoe.com
-  github: johndoe
-  linkedin: johndoe
+  email: shareit@hanmail.net
+  github: tool2000
+  linkedin: 
   phone: 
   gitlab: 
   twitter: 
 
 languages:
+  - idiom: Korean
   - idiom: English
-  - idiom: Russian
-  - idiom: French
+  - idiom: Japanese
 
 education:
   - degree: MSc in Informatics
