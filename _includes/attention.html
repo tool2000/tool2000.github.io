@@ -36,8 +36,8 @@
         alignment를 구하는 방법은 여러가지가 있는데 소개하면 다음과 같다.<p></p>
 
          (1) score(h, hs)를 구한다.  <br>
-          (a) ${h_t^T}{hs}$  (h와 hs의 내적을 그대로 이용) <br>  
-          (b) ${h_t^T}{Wa}{hs} * Wa*hs (가중화된 hs와 h의 내적)<br>  
+          (a) ${\mathbf{h_t}^\intercal}{hs}$ (h와 hs의 내적을 그대로 이용) <br>  
+          (b) ${\mathbf{h_t}^\intercal}{W_a}{hs}$ (가중화된 hs와 h의 내적)<br>  
           (c) Va * tanh( Wa[ h; hs])   (hs와 h를 연결하여 affine계층 통과후 가중치 Va적용)  <br>
          (2) alignment = softmax( score(h, hs) )  <br>
         
