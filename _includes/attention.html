@@ -46,7 +46,7 @@
          논문 Effective Approaches to Attention-based Neural Machine Translation 에서는 global attention과 local attention으로 구분하면서 local attention이 더 효율적일 수 있다고 말한다.<p></p>
 
         지금까지는 score를 구할때 단점이 모든 hs에 대하여 구하다보니 연산비용이 컸다고 하면서 전체 시퀀스의 어느 지점 P 에서 window D구간으로 들여다보고 alignment를 구할 수 있다고 한다. 이를 수식으로 표현하면 다음과 같다.<p></p>
-        $ P = S {\sigmoid({V_p}{tanh({W_p}{h})}} $  <p></p>  
+        $ P = S {sigmoid({V_p}{tanh({W_p}{h})}} $  <p></p>  
           -> h를 affine계층에 통과시키고 0~1확률값에 전체 입력 문장의 길이 S를 곱하면, 주목해야할 위치에 대한 확률을 얻을 수 있다. 그리고 p를 중심으로 한 가우시안 분포(표준정규분포) 값을 구하여 window D 구간안에서 값들을 곱하여 최종 alignment를 구한다.
           <p></p>
 
