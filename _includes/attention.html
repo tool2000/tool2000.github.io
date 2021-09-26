@@ -1,0 +1,51 @@
+{% assign profile = site.data.data.profile %}
+{% if profile %}
+<section class="career-profile">
+    <h2 class="title">Chapter. Attention</h2>
+    <div class="details">
+
+        Attention 소개
+
+        문제제기
+        왜 어텐션이 필요한가
+        입력데이터의 feature 특성을 더욱 잘 파악하여 출력 결과를 개선하기 위해서.
+        기존의 seq2seq는 인코더의 최종 은닉상태인 고정길이 벡터만을 전달하였다. 
+        고정길이 벡터는 입력 길이에 상관없이 정보를 밀어넣기에 필요한 정보가 다 담기지 못할 수 있다.
+        인코더 LSTM 계층의 출력 h를 모두 모아서 decoder에 전달한다. 이를 hs라 한다.
+        입력과 출력데이터의 대응관계를 나타내는 정보를 alignment라 한다. 
+        필요한 정보에만 주목하여 시계열 변환을 수행하면 더 좋은 결과를 얻을 수 있다. 
+        *거꾸로 유추하자면, 입력데이터와 출력데이터 간에 일관되며 내부규칙(문법)에 의해 지속적인 대응 관계가 성립하는 경우에만 seq2seq 모델이 만들어질 수 있다. 아무 입력과 출력을 준다고 해서 대응하는 모델이 만들어지는 것은 아니다.
+        
+        입력데이터와 출력데이터의 대응관계인 alignment의 표현방법
+        encoder 전체 은닉상태 hs에 대하여 현재 시점 t에서 디코더의 출력 h와의 유사도를 구한다.
+        이 유사도(스칼라값)를 원소로 하는 벡터가 t시점에서 인코더계층 은닉상태의 중요도를 의미한다.
+        
+        1. alignment를 구하는 방법
+         (1) score(h, hs)를 구한다.
+          (a) hs와 h의 내적을 그대로 이용
+          (b) h * Wa*hs (가중화된 hs와 h의 내적)
+          (c) Va * tanh( Wa[ h; hs])   (hs와 h를 연결하여 affine계층 통과후 가중치 Va적용)
+         (2) alignment = softmax( score(h, hs) )
+        
+         (3) alignment를 구하는 새로운 시도들
+         논문 Effective Approaches to Attention-based Neural Machine Translation 에서는 global attention과 local attention으로 구분하면서 local attention이 더 효율적일 수 있다고 말한다.
+        지금까지는 score를 구할때 단점이 모든 hs에 대하여 구하다보니 연산비용이 컸다고 하면서 전체 시퀀스의 어느 지점 P 에서 window D구간으로 들여다보고 alignment를 구할 수 있다고 한다. 이를 수식으로 표현하면 다음과 같다.
+        P = S * sigmoid(Vp*tanh(Wp*h))  
+          -> h를 affine계층에 통과시키고 0~1확률값에 전체 입력 문장의 길이 S를 곱하면, 주목해야할 위치에 대한 확률을 얻을 수 있다. 그리고 p를 중심으로 한 가우시안 분포(표준정규분포) 값을 구하여 window D 구간안에서 값들을 곱하여 최종 alignment를 구한다.
+        
+        a = softmax( score(h, hs) ) * exp( -(s-P)**2 / 2σ**2 )
+          -> σ 값은 경험적으로 D/2 이며 s 는 p가 실수값이므로 그것을 integer로 바꾼 값이다.
+        *이 논문에서는 이렇게 구해진 local attention을 디코더의 입력으로도 넣어준다. 이를 input feeding이라고 한다.
+        
+        2. alignment(중요도)를 hs에 곱한 후 세로축으로 더해주어 맥락벡터 c를 만든다.
+         c = np.sum(hs * a, axis=1)
+          *a의 곱을 통해 가중치만큼 깎여나가고, 이후 세로축으로 원소들이 더해지면서 공간차원에서 정보기여도만큼 하나로 합쳐진다. 그리하여 얻어진 새로운 벡터는 a가 구해진 시점에서, '전체 입력데이터에서 의미가 두드러진 부분을 강하게 함유한 압축데이터'가 된다. 이를 맥락 벡터라 한다. 
+        이를 자연어처리에 한정하여 다시 해석하자면, 디코더에 단어 t가 주어졌을때, 그 시점에서 t와 연관된 입력문장의 의미를 c 로 재해석하여 결과를 산출하는 메커니즘이다. 
+        
+        3. 맥락벡터 c 와 h 를 affine 계층에 통과시켜 최종 score를 얻는다.
+        
+        
+
+    </div>
+</section>
+{% endif %}
