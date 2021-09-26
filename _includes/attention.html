@@ -30,16 +30,16 @@
 
 
         <h3 class="title">입력데이터와 출력데이터의 대응관계인 alignment의 표현방법</h2>
-        encoder 전체 은닉상태 hs에 대하여 현재 시점 t에서 디코더의 출력 h와의 유사도를 구한다.
-        이 유사도(스칼라값)를 원소로 하는 벡터가 t시점에서 인코더계층 은닉상태의 중요도를 의미한다.
+        encoder 전체 은닉상태 hs에 대하여 현재 시점 t에서 디코더의 출력 h와의 유사도를 구한다.  
+        이 유사도(스칼라값)를 원소로 하는 벡터가 t시점에서 인코더계층 은닉상태의 중요도를 의미한다.  
         
-        1. alignment를 구하는 방법
-         (1) score(h, hs)를 구한다.
-          (a) hs와 h의 내적을 그대로 이용
-          (b) h * Wa*hs (가중화된 hs와 h의 내적)
-          (c) Va * tanh( Wa[ h; hs])   (hs와 h를 연결하여 affine계층 통과후 가중치 Va적용)
-         (2) alignment = softmax( score(h, hs) )
-        
+        1. alignment를 구하는 방법  
+         (1) score(h, hs)를 구한다.  
+          (a) hs와 h의 내적을 그대로 이용  
+          (b) h * Wa*hs (가중화된 hs와 h의 내적)  
+          (c) Va * tanh( Wa[ h; hs])   (hs와 h를 연결하여 affine계층 통과후 가중치 Va적용)  
+         (2) alignment = softmax( score(h, hs) )  
+            
          (3) alignment를 구하는 새로운 시도들
          논문 Effective Approaches to Attention-based Neural Machine Translation 에서는 global attention과 local attention으로 구분하면서 local attention이 더 효율적일 수 있다고 말한다.
         지금까지는 score를 구할때 단점이 모든 hs에 대하여 구하다보니 연산비용이 컸다고 하면서 전체 시퀀스의 어느 지점 P 에서 window D구간으로 들여다보고 alignment를 구할 수 있다고 한다. 이를 수식으로 표현하면 다음과 같다.
