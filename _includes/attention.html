@@ -1,7 +1,7 @@
 {% assign profile = site.data.data.profile %}
 {% if profile %}
 <section class="career-profile">
-    <h2 class="title">Chapter. Attention</h2>
+    <h2 class="title">Attention 기법</h2>
     <div class="details">
 
         <p><b>왜 어텐션이 필요한가</b></p>
@@ -29,7 +29,6 @@
             아무 입력과 출력을 준다고 해서 대응 모델이 만들어지는 것은 아니다.</p>
         
 
-
         <h3 class="title">입력데이터와 출력데이터의 대응관계인 alignment의 표현방법</h3>
         encoder 전체 은닉상태 hs에 대하여 현재 시점 t에서 디코더의 출력 h와의 유사도를 구한다.  
         이 유사도(스칼라값)를 원소로 하는 벡터가 t시점에서 인코더계층 은닉상태의 중요도를 의미한다.  
@@ -41,6 +40,9 @@
           (c) ${\mathbf{V_a}^\intercal}{tanh({W_a}[h; hs])}$ (hs와 h를 연결하여 affine계층 통과후 가중치 Va적용)  <br>
          (2) alignment = softmax( score(h, hs) )  <br>
         
+        <!-- <p>테스트: $$\lim_{x\to 0}{\frac{e^x-1}{2x}}\overset{\left[\frac{0}{0}\right]}{\underset{\mathrm{H}}{=}}\lim_{x\to 0}{\frac{e^x}{2}}={\frac{1}{2}}$$ </p> -->
+        <img src="{{'/assets/attention_layer.drawio.png' | absolute_url}}">
+
          <h3 class="title">alignment를 구하는 새로운 시도들</h3>
          
          논문 Effective Approaches to Attention-based Neural Machine Translation 에서는 global attention과 local attention으로 구분하면서 local attention이 더 효율적일 수 있다고 말한다.<p></p>
@@ -64,8 +66,7 @@
         최종적으로 맥락벡터 c 와 h 를 affine 계층에 통과시켜 최종예상값을 얻는다. <p></p>
         
 
-        <!-- <p>테스트: $$\lim_{x\to 0}{\frac{e^x-1}{2x}}\overset{\left[\frac{0}{0}\right]}{\underset{\mathrm{H}}{=}}\lim_{x\to 0}{\frac{e^x}{2}}={\frac{1}{2}}$$ </p> -->
-        <img src="{{'/assets/attention_layer.drawio.png' | absolute_url}}">
+
 
     </div>
 </section>
