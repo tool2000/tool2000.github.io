@@ -7,7 +7,7 @@
         margin-bottom: 20px;
         .degree {
             @include body-text;
-            font-weight: bold;
+            // font-weight: bold;
         }
         .university {
             @include body-text;
